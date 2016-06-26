@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-1.12.3.min.js"></script>
+
+    <script>
+        function mysplit(str,f){
+            var str_char_arr = [];
+            var f_char_arr = [];
+            var new_arr = [];//返回的字符串
+            //字符串的长度
+            var str_len = str.length;
+            //将字符串转换成字符数组
+            for(var i = 0;i < str_len;i++){
+                str_char_arr.push(str.charAt(i));
+            }
+
+            //分隔符的第一个字符
+            var f_char_first = f.charAt(0);
+            //分隔符长度
+            var f_len = f.length;
+            //将分隔符转换成字符数组
+            for(var i = 0;i < f_len;i++){
+                f_char_arr.push(f.charAt(i));
+            }
+
+            var new_str = "";  //分隔产生的字符串
+            for(var i = 0;i < str_len;i++){
+                var i_str_char = str_char_arr[i];
+                //匹配第一个字符
+                if(i_str_char == f_char_first){
+                    //长度超出
+                    if(f_len + i > str_len) contiune;
+                    var isC = true;  //是否全部匹配
+                    //因为第一个字符已经匹配过，所以从1开始
+                    for(var j = 1;j < f_len;j++){
+                        //若有一个不匹配即为不匹配
+                        if(str_char_arr[i+j] != f_char_arr[j]){
+                            isC = false;
+                            break;
+                        }
+                    }
+                    if(isC){
+                        //alert(new_str);
+                        new_arr.push(new_str);
+                        i+=f_len-1;
+                        new_str = "";
+                    }
+                }else{
+                    new_str+=i_str_char;
+                }
+            }
+            return new_arr;
+        }
+        var a = "aaaabfsfasewfbwfaeg";
+        var s = mysplit(a,"f");
+        console.log("长度："+s.length);
+        console.log("元素："+s);
+
+
+      /*  var str="";
+        function setItem(id){
+            var arr = $("#ins").val()==""?[]:$("#ins").val().split(",");
+            if((","+arr.toString()+",").indexOf(","+id+",")!=-1) return;
+            if(arr.length>=3) return;
+            arr.push(id);
+            $("#ins").val(arr.toString());
+        }
+*/
+
+        function setItem(id){
+            var arr = [];
+            if($("#ins").val()!="") arr = $("#ins").val().split(",");
+            if( (","+arr.toString()+",").indexOf(","+id+",") != -1) {
+                for(var i =0;i<arr.length;i++){
+                    if(arr[i]==id){
+                        arr.splice(i,1);
+                        $("#ins").val(arr.toString());
+                        return;
+                    }
+                }
+            }
+            if(arr.length>=3) return;
+            arr.push(id);
+            $("#ins").val(arr.toString());
+        }
+
+
+    </script>
+</head>
+<body>
+<div>
+    <ul>
+        <li id="t1" onclick="setItem('t1')"><a>选项1</a></li>
+        <li id="t2" onclick="setItem('t2')"><a>选项2</a></li>
+        <li id="t3" onclick="setItem('t3')"><a>选项3</a></li>
+        <li id="t4" onclick="setItem('t4')"><a>选项4</a></li>
+        <li id="t5" onclick="setItem('t5')"><a>选项5</a></li>
+        <li id="t6" onclick="setItem('t6')"><a>选项6</a></li>
+    </ul>
+</div>
+
+<input type="text" id="ins"/>
+</body>
+</html>
