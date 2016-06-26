@@ -1,0 +1,45 @@
+window.onload = function(){
+		var ohtml = document.documentElement;
+		getSize();
+
+		window.onresize = function(){
+			getSize();  //得到body的font-size；
+		}
+		function getSize(){
+
+			var screenWidth = ohtml.clientWidth;  //得到屏幕的宽度
+			
+			if(screenWidth <= 320){  //手机屏最小的宽度就是320
+
+				ohtml.style.fontSize = '23.7037px';
+
+			}else if(screenWidth >= 640){  //通用的屏幕宽是640
+
+				ohtml.style.fontSize = '47.4074px';
+
+			}else{  //剩下就自适应
+
+				ohtml.style.fontSize = screenWidth(540/40)+'px';   
+				//540是设计图的宽（540要换成设计图的宽度）。40px是当前字体大指的是通用的css里面设置的字体大小。通常要写成100
+			}
+			
+		}
+
+
+	}
+	
+	
+	
+	
+	document.documentElement.style.fontSize=document.documentElement.clientWidth/6.4+'px';
+		//用户企图改变浏览器大小
+		window.addEventListener("resize",setRemSize,false); //添加监听事件。监听是否是在改变浏览器的大小。
+			
+	        function setRemSize(){
+
+			document.documentElement.style.fontSize=document.documentElement.clientWidth/6.4+'px';
+
+		}
+			
+	}
+	
