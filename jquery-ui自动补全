@@ -1,0 +1,37 @@
+/**
+ * 
+ * @param id 文本框的id
+ * @param url 接口地址
+ * @param param 传入参数
+ * @param callback 回调函数  显示传出参数
+ */
+function autocompleteFunc(id,url,param,callback){
+	$('#'+id).autocomplete({
+        source: function( request, response) {
+        	var data;
+        	data='{"'+param+'":"'+$('#'+id).val()+'"}';
+        	//console.log(JSON.parse(data));
+            $.getJSON(url,JSON.parse(data),function(resp){
+              //  console.log(resp);
+              //console.log($('#'+id).val());                
+                if(resp){
+	                    response( $.map(resp, function(item) {	                    	
+	                    	return callback(item);
+	                    }));
+	                    
+	               }
+	
+	            });
+	        }
+	});
+}
+//客户姓名
+function custNameResp(item){
+	return {
+		label:item.userName,
+		value:item.userName
+	}
+}
+
+//调用方式
+autocompleteFunc('custName',path+'/project/newproject/getCustList','custName',custNameResp); //补全客户姓名
