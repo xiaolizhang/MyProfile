@@ -1,0 +1,33 @@
+/**
+ * 
+ * @param id 文本框的id
+ * @param url  接口地址
+ * @param param 入参
+ * @param hiddenInput  隐藏域的ID
+ */
+function newReceptionistSearch(id,url,param,hiddenInput,callback){
+	$('#'+id).autocomplete({
+        source: function( request, response) {
+        	var data='{"'+param+'":"'+$('#'+id).val()+'"}';
+            $.getJSON(url,JSON.parse(data),function(resp){
+                if(resp){
+	                 response( $.map(resp, function(item) {		                	 
+	                	 return callback(item);	                    	
+	                 }));
+	              }
+	
+	            });
+	        },
+	        select: function (event, ui) {
+	        	$('#'+hiddenInput).val(ui.item.result);
+	        }
+	});
+}
+
+function companyResp(item){
+	return {
+		label:item.companyName,
+		value:item.companyName,
+		result:item.companyId
+	}
+}
